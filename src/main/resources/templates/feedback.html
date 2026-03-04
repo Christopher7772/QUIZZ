@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master — Feedback</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="quiz-header">
+            <span class="quiz-pseudo" th:text="'👤 ' + ${quizSession.pseudo}">Player</span>
+            <span class="quiz-score" th:text="${quizSession.score} + ' / ' + ${quizSession.totalQuestions} + ' correct'">0 / 5 correct</span>
+        </div>
+
+        <!-- Feedback correct -->
+        <div class="feedback-box feedback-correct" th:if="${correct}">
+            <span class="feedback-icon">✅</span>
+            <div>
+                <p class="feedback-title">Correct!</p>
+                <p class="feedback-sub">Well done, that's the right answer.</p>
+            </div>
+        </div>
+
+        <!-- Feedback incorrect -->
+        <div class="feedback-box feedback-wrong" th:unless="${correct}">
+            <span class="feedback-icon">❌</span>
+            <div>
+                <p class="feedback-title">Wrong answer!</p>
+                <p class="feedback-sub">
+                    The correct answer was
+                    <strong th:text="${question.options[question.correctAnswerIndex]}">answer</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Récapitulatif -->
+        <div class="answer-recap">
+            <strong>Question:</strong> <span th:text="${question.text}">...</span><br>
+            <strong>Your answer:</strong> <span th:text="${question.options[chosenAnswerIndex]}">...</span>
+        </div>
+
+        <!-- Navigation -->
+        <a th:if="${!finished}" th:href="@{/question}" class="btn btn-primary">
+            Next Question →
+        </a>
+        <a th:if="${finished}" th:href="@{/result}" class="btn btn-primary">
+            See Final Results →
+        </a>
+
+    </div>
+</div>
+</body>
+</html>

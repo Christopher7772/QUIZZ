@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master — Results</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+
+        <!-- Titre -->
+        <div class="result-header">
+            <h2>Quiz Completed!</h2>
+            <p>Here's how you did</p>
+        </div>
+
+        <!-- Anneau de score animé -->
+        <div class="score-display">
+            <div class="score-ring">
+                <svg width="160" height="160" viewBox="0 0 160 160">
+                    <defs>
+                        <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="#4f8cff"/>
+                            <stop offset="100%" stop-color="#00e5a0"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="score-ring-bg" cx="80" cy="80" r="70"/>
+                    <circle class="score-ring-fill" cx="80" cy="80" r="70"
+                            id="scoreCircle"
+                            th:attr="data-pct=${percentage}"/>
+                </svg>
+                <div class="score-center">
+                    <span class="score-number" th:text="${percentage} + '%'">80%</span>
+                    <span class="score-label">score</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message personnalisé -->
+        <p class="result-message" th:text="${message}">Great job!</p>
+        <p class="result-info">
+            <span th:text="${quizSession.pseudo}">Player</span>
+            answered <strong th:text="${quizSession.score} + '/' + ${quizSession.totalQuestions}">4/5</strong>
+            correctly in <strong th:text="${quizSession.category}">english</strong>
+        </p>
+
+        <!-- Stats -->
+        <div class="result-stats">
+            <div class="stat-box">
+                <div class="stat-value" th:text="${quizSession.score}">4</div>
+                <div class="stat-key">Correct</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" th:text="${quizSession.totalQuestions - quizSession.score}">1</div>
+                <div class="stat-key">Wrong</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" th:text="${percentage} + '%'">80%</div>
+                <div class="stat-key">Score</div>
+            </div>
+        </div>
+
+        <!-- Rejouer -->
+        <a th:href="@{/}" class="btn btn-primary">Play Again →</a>
+
+    </div>
+</div>
+
+<!-- Animation de l'anneau de score -->
+<script>
+    const circle = document.getElementById('scoreCircle');
+    if (circle) {
+        const pct   = parseInt(circle.getAttribute('data-pct')) || 0;
+        const r     = 70;
+        const circ  = 2 * Math.PI * r;          // ~440
+        const offset = circ - (pct / 100) * circ;
+        circle.style.strokeDasharray  = circ;
+        circle.style.strokeDashoffset = circ;    // commence à 0%
+        // Lance l'animation après un court délai
+        setTimeout(() => {
+            circle.style.transition     = 'stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)';
+            circle.style.strokeDashoffset = offset;
+        }, 200);
+    }
+</script>
+
+</body>
+</html>

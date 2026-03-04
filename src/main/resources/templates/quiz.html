@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master — Question</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+
+        <!-- Header : pseudo + score -->
+        <div class="quiz-header">
+            <span class="quiz-pseudo" th:text="'👤 ' + ${quizSession.pseudo}">Player</span>
+            <span class="quiz-score" th:text="${quizSession.score} + ' / ' + ${quizSession.totalQuestions} + ' correct'">0 / 5 correct</span>
+        </div>
+
+        <!-- Barre de progression -->
+        <div class="progress-wrap">
+            <div class="progress-fill"
+                 th:style="'width: ' + ${questionNumber * 100 / quizSession.totalQuestions} + '%'">
+            </div>
+        </div>
+
+        <!-- Compteur + badge catégorie -->
+        <div class="quiz-meta">
+            <span class="quiz-counter"
+                  th:text="'Question ' + ${questionNumber} + ' of ' + ${quizSession.totalQuestions}">
+                Question 1 of 5
+            </span>
+            <span th:class="'badge badge-' + ${quizSession.category}"
+                  th:text="${quizSession.category}">english</span>
+        </div>
+
+        <!-- Texte de la question -->
+        <p class="question-text" th:text="${question.text}">Question...</p>
+
+        <!-- Options de réponse -->
+        <div class="options-grid">
+            <div th:each="option, stat : ${question.options}">
+                <form th:action="@{/answer}" method="post">
+                    <input type="hidden" name="answerIndex" th:value="${stat.index}"/>
+                    <button type="submit" class="option-btn">
+                        <span class="option-letter" th:text="${letters[stat.index]}">A</span>
+                        <span th:text="${option}">Option</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

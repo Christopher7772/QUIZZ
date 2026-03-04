@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+            <h1>Quiz Master</h1>
+            <p>Test your knowledge — English, Maths &amp; Chemistry</p>
+        </div>
+
+        <!-- Formulaire -->
+        <form th:action="@{/start}" method="post">
+
+            <!-- Pseudo -->
+            <div class="form-group">
+                <label for="pseudo">Your Nickname</label>
+                <input
+                    type="text"
+                    id="pseudo"
+                    name="pseudo"
+                    class="form-control"
+                    placeholder="Enter your nickname..."
+                    maxlength="30"
+                    required
+                    autofocus
+                />
+            </div>
+
+            <!-- Catégorie -->
+            <div class="form-group">
+                <label>Choose a Category</label>
+                <div class="category-grid">
+
+                    <div class="category-card">
+                        <input type="radio" id="cat-english" name="category" value="english" required/>
+                        <label class="category-label" for="cat-english">
+                            <span class="icon">🇬🇧</span>
+                            <span class="name">English</span>
+                        </label>
+                    </div>
+
+                    <div class="category-card">
+                        <input type="radio" id="cat-maths" name="category" value="maths"/>
+                        <label class="category-label" for="cat-maths">
+                            <span class="icon">📐</span>
+                            <span class="name">Maths</span>
+                        </label>
+                    </div>
+
+                    <div class="category-card">
+                        <input type="radio" id="cat-chemistry" name="category" value="chemistry"/>
+                        <label class="category-label" for="cat-chemistry">
+                            <span class="icon">⚗️</span>
+                            <span class="name">Chemistry</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary">
+                Start Quiz — 5 Questions →
+            </button>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
