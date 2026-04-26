@@ -8,6 +8,6 @@ RUN mvn clean package -DskipTests
 # Étape 2 : Image finale légère pour lancer l'app
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/quiz-app-1.0.0.jar app.jar
+COPY --from=build /app/target/QUIZZ-1.0.0.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
