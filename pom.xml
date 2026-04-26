@@ -4,9 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- =============================================
-         Parent Spring Boot - gestion automatique des versions
-         ============================================= -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -15,29 +12,27 @@
     </parent>
 
     <groupId>com.quiz</groupId>
-    <artifactId>quiz-app</artifactId>
+    <artifactId>QUIZZ</artifactId>
     <version>1.0.0</version>
-    <name>Quiz App</name>
+    <name>QUIZZ</name>
     <description>Application de Quiz - Anglais, Maths, Chimie</description>
 
     <properties>
         <java.version>17</java.version>
+        <start-class>com.quiz.QuizApplication</start-class>
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Web : pour les contrôleurs HTTP -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Thymeleaf : moteur de templates HTML côté serveur -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Tests unitaires Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -47,10 +42,12 @@
 
     <build>
         <plugins>
-            <!-- Plugin Maven pour compiler et packager l'application Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
